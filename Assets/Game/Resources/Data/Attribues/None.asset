@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Attribute_None
   Name: None
-  RuleList: []
+  RuleArray:
+  - {fileID: 11400000, guid: 60c479f5ddbe96448a74a198a3af2700, type: 2}

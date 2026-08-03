@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Attribute_Fire
   Name: Fire
-  RuleList: []
+  RuleArray:
+  - {fileID: 11400000, guid: 8feabd0b71e42c545ba29cad9a328a4f, type: 2}

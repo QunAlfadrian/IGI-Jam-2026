@@ -1,10 +1,16 @@
 using DG.Tweening;
 using IGIJam.OrderInDisorder.GridSystem;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace IGIJam.OrderInDisorder.ItemSystem {
-    public class Item : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler {
+    public class Item : MonoBehaviour, IInitializable, IDisposable, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler {
         private Camera _cam;
         private Plane _dragPlane;
         private Vector3 _offset;
@@ -12,11 +18,15 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         private Collider _collider;
         private Tween _moveTween;
         private bool _wasDropped;
+        private List<ItemRuleBase> _ruleList;
 
         [SerializeField] private ItemData _data;
         [SerializeField] private ItemState _state;
 
         public ItemData Data => _data;
+        public Archetype Archetype => _data.Archetype;
+        public Attribute[] AttributeArray => _data.AttributeArray;
+        public ItemRuleBase[] ItemRuleArray => _data.ItemRuleArray;
         public ItemState State => _state;
         public Cell Cell { get; private set; }
 
@@ -26,12 +36,95 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             _data = Data.GetInstance();
         }
 
-        public void Evaluate() {
-            bool result = false;
+        public void Initialize() {
+            GameContext.SceneEvents.Subscribe<ToggleItemColliderEvent>(OnToggleItemCollider);
+        }
+
+        public void Dispose() {
+            GameContext.SceneEvents.Unsubscribe<ToggleItemColliderEvent>(OnToggleItemCollider);
+        }
+
+        public void Evaluate(out List<Cell> affectedCells) {
+            if (_ruleList == null) {
+                CacheRules();
+            }
+
+            affectedCells = new List<Cell>();
+
+            List<Cell> affectedCellsByRule = new List<Cell>();
+            bool result = true;
+
+            for (int ruleIdx = 0; ruleIdx < _ruleList.Count; ruleIdx++) {
+                affectedCellsByRule = _ruleList[ruleIdx].GetAffectedCells(Cell, Cell.Grid);
+                for (int i = 0; i < affectedCellsByRule.Count; i++) {
+                    if (affectedCells.Contains(affectedCellsByRule[i])) {
+                        continue;
+                    }
+
+                    affectedCells.Add(affectedCellsByRule[i]);
+                }
+
+                if (!result) {
+                    continue;
+                }
+
+                result = _ruleList[ruleIdx].Evaluate(Cell, Cell.Grid, affectedCellsByRule);
+            }
 
             _state = result ? ItemState.Happy : ItemState.Sad;
-
             Debug.Log($"{Data.Name} is {State.ToString()}");
+        }
+
+        public void Evaluate() {
+            if (_ruleList == null) {
+                CacheRules();
+            }
+
+            List<Cell> affectedCellsByRule = new List<Cell>();
+            bool result = true;
+
+            for (int ruleIdx = 0; ruleIdx < _ruleList.Count; ruleIdx++) {
+                affectedCellsByRule = _ruleList[ruleIdx].GetAffectedCells(Cell, Cell.Grid);
+
+                result = _ruleList[ruleIdx].Evaluate(Cell, Cell.Grid, affectedCellsByRule);
+                if (!result) {
+                    break;
+                }
+            }
+
+            _state = result ? ItemState.Happy : ItemState.Sad;
+            Debug.Log($"{Data.Name} is {State.ToString()}");
+        }
+
+        private void CacheRules() {
+            _ruleList = new List<ItemRuleBase>();
+
+            for (int i = 0; i < Archetype.RuleArray.Length; i++) {
+                if (_ruleList.Contains(Archetype.RuleArray[i])) {
+                    continue;
+                }
+
+                _ruleList.Add(Archetype.RuleArray[i]);
+            }
+
+            for (int i = 0; i < AttributeArray.Length; i++) {
+                ItemRuleBase[] attributeRules = AttributeArray[i].RuleArray;
+                for (int j = 0; j < attributeRules.Length; j++) {
+                    if (_ruleList.Contains(attributeRules[j])) {
+                        continue;
+                    }
+
+                    _ruleList.Add(attributeRules[j]);
+                }
+            }
+
+            for (int i = 0; i < ItemRuleArray.Length; i++) {
+                if (_ruleList.Contains(ItemRuleArray[i])) {
+                    continue;
+                }
+
+                _ruleList.Add(ItemRuleArray[i]);
+            }
         }
 
         public void SetData(ItemData data) {
@@ -40,7 +133,6 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
         public void SetCell(Cell cell) {
             Cell = cell;
-            Evaluate();
         }
 
         public void ConfirmDrop() {
@@ -56,7 +148,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             Move(_startingPos);
 
             if (Cell != null) {
-                Cell.Occupied = true;
+                Cell.SetItem(this);
             }
         }
 
@@ -74,7 +166,6 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             _dragPlane = new Plane(Vector3.forward, transform.position);
             _offset = transform.position - GetPointOnPlane(eventData);
 
-            _collider.enabled = false;
             _wasDropped = false;
 
             if (Cell != null) {
@@ -82,6 +173,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             }
 
             GameContext.SceneEvents.Publish(new ToggleCellColliderEvent(true));
+            GameContext.SceneEvents.Publish(new ToggleItemColliderEvent(false));
         }
 
         public void OnDrag(PointerEventData eventData) {
@@ -96,6 +188,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             }
 
             GameContext.SceneEvents.Publish(new ToggleCellColliderEvent(false));
+            GameContext.SceneEvents.Publish(new ToggleItemColliderEvent(true));
         }
 
         private Vector3 GetPointOnPlane(PointerEventData eventData) {
@@ -106,5 +199,20 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             return transform.position;
         }
         #endregion
+
+        #region Event Handlers
+        private void OnToggleItemCollider(ToggleItemColliderEvent evt) {
+            _collider.enabled = evt.Enabled;
+        }
+        #endregion
+
+#if UNITY_EDITOR
+        private void OnDrawGizmos() {
+            GUIStyle style = new GUIStyle();
+            style.normal.textColor = Color.yellow;
+            style.alignment = TextAnchor.MiddleCenter;
+            Handles.Label(transform.position + Vector3.up * 0.25f, State.ToString(), style);
+        }
+#endif
     }
 }

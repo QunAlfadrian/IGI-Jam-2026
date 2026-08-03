@@ -1,6 +1,8 @@
 using IGIJam.OrderInDisorder.ItemSystem;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -12,7 +14,8 @@ namespace IGIJam.OrderInDisorder.GridSystem {
         [SerializeField] private bool _occupiable;
         public bool Occupied;
         [SerializeField] private Item _item;
-        private Collider _collider;
+        [SerializeField] private Collider _collider;
+        private List<Cell> _affectedCellList;
 
         [Header("Grid")]
         [SerializeField] private Grid _grid;
@@ -37,11 +40,32 @@ namespace IGIJam.OrderInDisorder.GridSystem {
         }
 
         public void SetItem(Item item) {
-            Debug.Log($"Item {item.name} moved to cell {GridPosition}");
             _item = item;
+            if (_item == null) {
+                Occupied = false;
+                EvaluateAffectedCells();
+                return;
+            }
+
+            Debug.Log($"Item {item.name} moved to cell {GridPosition}");
+
             _item.Move(PivotPosition);
             _item.SetCell(this);
             Occupied = true;
+
+            _item.Evaluate(out _affectedCellList);
+            EvaluateAffectedCells();
+        }
+
+        public void EvaluateAffectedCells() {
+            for (int i = 0; i < _affectedCellList.Count; i++) {
+                if (!_affectedCellList[i].Occupiable || !_affectedCellList[i].Occupied) {
+                    continue;
+                }
+
+                Debug.Log($"Evaluating {_affectedCellList[i].GridPosition}");
+                _affectedCellList[i].Item.Evaluate();
+            }
         }
 
         public void ToggleCollider(bool enabled) {
@@ -49,11 +73,6 @@ namespace IGIJam.OrderInDisorder.GridSystem {
         }
 
         public void Swap(Cell other) {
-            // swap the item in this cell with item in other
-            if (Item == null || other.Item == null) {
-                return;
-            }
-
             Item current = Item;
 
             SetItem(other.Item);
@@ -85,6 +104,12 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             style.normal.textColor = Color.white;
             style.alignment = TextAnchor.MiddleCenter;
             Handles.Label(transform.position, GridPosition.ToString(), style);
+
+            if (_collider != null && _collider is BoxCollider) {
+                BoxCollider collider = _collider as BoxCollider;
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireCube(collider.transform.position + collider.center, collider.size);
+            }
         }
 #endif
     }

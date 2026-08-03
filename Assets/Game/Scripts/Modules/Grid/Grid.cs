@@ -11,6 +11,11 @@ namespace IGIJam.OrderInDisorder.GridSystem {
         public List<Cell> CellList => _cellList;
         public int Width => _width;
         public int Height => _height;
+        public int Count { get; private set; }
+
+        private void Awake() {
+            Count = Width * Height;
+        }
 
         private void Start() {
             // initialize cell in cell list
@@ -44,6 +49,10 @@ namespace IGIJam.OrderInDisorder.GridSystem {
         }
 
         public Cell GetCell(int row, int col) {
+            if (row < 0 || row >= Height || col < 0 || col >= Width) {
+                return null;
+            }
+
             return _cellList[ToIndex(row, col)];
         }
 

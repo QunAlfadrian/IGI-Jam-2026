@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: Attribute_Nature
   Name: Nature
-  RuleList: []
+  RuleArray:
+  - {fileID: 11400000, guid: 05fb777a12a6dcb4d8d952a7261e6a86, type: 2}

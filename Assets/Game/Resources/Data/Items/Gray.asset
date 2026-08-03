@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67be83b1c1ccb8041879792d4a70064b, type: 3}
+  m_Name: Gray
+  m_EditorClassIdentifier: 
+  ID: Item_Gray
+  Name: Gray
+  Description: 
+  Prefab: {fileID: 0}
+  Archetype: {fileID: 11400000, guid: 1ca6a46924c4bbc408a068a6ce371a59, type: 2}
+  AttributeArray:
+  - {fileID: 11400000, guid: 0bea44b8f8f1c294aa8bb60300e8f006, type: 2}
+  ItemRuleArray: []

@@ -5,7 +5,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
     public abstract class ItemTrait : ScriptableObject {
         public string ID;
         public string Name;
-        public ItemRuleBase[] RuleList;
+        public ItemRuleBase[] RuleArray;
 
         public abstract bool Evaluate(Cell cell, GridSystem.Grid grid);
     }
