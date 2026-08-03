@@ -169,6 +169,8 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             _wasDropped = false;
 
             if (Cell != null) {
+                _state = ItemState.Happy;
+                Cell.EvaluateAffectedCells();
                 Cell.Occupied = false;
             }
 

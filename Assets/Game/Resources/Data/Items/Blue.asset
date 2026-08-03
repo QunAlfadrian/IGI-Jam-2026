@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: Blue
   Description: 
   Prefab: {fileID: 0}
-  Archetype: {fileID: 11400000, guid: 1ca6a46924c4bbc408a068a6ce371a59, type: 2}
+  Archetype: {fileID: 11400000, guid: 7d40a3e527945504798e3dad7f50c911, type: 2}
   AttributeArray:
   - {fileID: 11400000, guid: e417689a80418a24f90fa5b1c2c46e84, type: 2}
   ItemRuleArray: []

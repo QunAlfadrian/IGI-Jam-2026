@@ -9,10 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cab9121d95d4d21479d2b04716e6e32f, type: 3}
-  m_Name: Potion
+  m_Script: {fileID: 11500000, guid: 41e488042eae2aa46b7a19c9ed7e9152, type: 3}
+  m_Name: Middle Position Rule
   m_EditorClassIdentifier: 
-  ID: Archetype_Potion
-  Name: Potion
-  RuleArray:
-  - {fileID: 11400000, guid: 1926a7e4be555344790806d1be25a391, type: 2}
+  ID: Rule_MiddlePos
+  Name: Middle Position Rule
