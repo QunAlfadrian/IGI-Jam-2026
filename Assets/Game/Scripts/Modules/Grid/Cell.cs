@@ -43,17 +43,17 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             _item = item;
             if (_item == null) {
                 Occupied = false;
-                EvaluateAffectedCells();
                 return;
             }
 
             Debug.Log($"Item {item.name} moved to cell {GridPosition}");
 
-            _item.Move(PivotPosition);
             _item.SetCell(this);
             Occupied = true;
+        }
 
-            _item.Evaluate(out _affectedCellList);
+        public void EvaluateItem() {
+            Item.Evaluate(out _affectedCellList);
             EvaluateAffectedCells();
         }
 
@@ -66,6 +66,10 @@ namespace IGIJam.OrderInDisorder.GridSystem {
                 Debug.Log($"Evaluating {_affectedCellList[i].GridPosition}");
                 _affectedCellList[i].Item.Evaluate();
             }
+
+            if (!Occupied) {
+                _affectedCellList.Clear();
+            }
         }
 
         public void ToggleCollider(bool enabled) {
@@ -77,6 +81,16 @@ namespace IGIJam.OrderInDisorder.GridSystem {
 
             SetItem(other.Item);
             other.SetItem(current);
+
+            if (other.Occupied) {
+                other.Item.Move(other.PivotPosition);
+                other.EvaluateItem();
+            }
+
+            if (Occupied) {
+                Item.Move(PivotPosition);
+                EvaluateItem();
+            }
         }
 
         public void OnDrop(PointerEventData eventData) {
@@ -96,6 +110,9 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             }
 
             SetItem(droppedItem);
+            Item.Move(PivotPosition);
+
+            EvaluateItem();
         }
 
 #if UNITY_EDITOR

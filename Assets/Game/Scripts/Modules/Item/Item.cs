@@ -149,6 +149,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
             if (Cell != null) {
                 Cell.SetItem(this);
+                Cell.EvaluateItem();
             }
         }
 
@@ -170,7 +171,9 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
             if (Cell != null) {
                 _state = ItemState.Happy;
+                Cell.SetItem(null);
                 Cell.EvaluateAffectedCells();
+                Cell.SetItem(this);
                 Cell.Occupied = false;
             }
 
