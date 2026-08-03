@@ -13,19 +13,41 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         private Tween _moveTween;
         private bool _wasDropped;
 
+        [SerializeField] private ItemData _data;
+        [SerializeField] private ItemState _state;
+
+        public ItemData Data => _data;
+        public ItemState State => _state;
         public Cell Cell { get; private set; }
 
         private void Awake() {
             _cam = Camera.main;
             _collider = GetComponent<Collider>();
+            _data = Data.GetInstance();
+        }
+
+        public void Evaluate() {
+            bool result = false;
+
+            _state = result ? ItemState.Happy : ItemState.Sad;
+
+            Debug.Log($"{Data.Name} is {State.ToString()}");
         }
 
         public void SetData(ItemData data) {
-            // Set the item data here
+            _data = data;
+        }
+
+        public void SetCell(Cell cell) {
+            Cell = cell;
+            Evaluate();
+        }
+
+        public void ConfirmDrop() {
+            _wasDropped = true;
         }
 
         public void Move(Vector3 destination) {
-            Debug.Log("Moving to: " + destination);
             _moveTween.Kill();
             _moveTween = transform.DOMove(destination, 0.5f).SetEase(Ease.OutCubic);
         }
@@ -36,14 +58,6 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             if (Cell != null) {
                 Cell.Occupied = true;
             }
-        }
-
-        public void SetCell(Cell cell) {
-            Cell = cell;
-        }
-
-        public void ConfirmDrop() {
-            _wasDropped = true;
         }
 
         #region Pointer Event Handlers

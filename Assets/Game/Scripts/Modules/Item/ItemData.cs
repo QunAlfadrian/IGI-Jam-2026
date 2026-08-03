@@ -7,8 +7,15 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         public string Name;
         public string Description;
         public GameObject Prefab;
+        public Archetype Archetype;
+        public Attribute[] AttributeArray;
+        public ItemRuleBase[] ItemRuleArray;
 
-        public Item GetInstance(Transform parent) {
+        public ItemData GetInstance() {
+            return Instantiate(this);
+        }
+
+        public Item GetItem(Transform parent) {
             GameObject instantiated = Instantiate(Prefab, parent);
             Item item = instantiated.GetComponent<Item>();
 
