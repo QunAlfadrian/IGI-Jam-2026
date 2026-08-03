@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace IGIJam.OrderInDisorder.GridSystem {
-    public class Grid : MonoBehaviour {
+    public class Grid : MonoBehaviour, IInitializable, IDisposable {
         [SerializeField] private List<Cell> _cellList;
         [SerializeField] private int _width;
         [SerializeField] private int _height;
@@ -15,6 +16,20 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             // initialize cell in cell list
             for (int i = 0; i < _cellList.Count; i++) {
                 _cellList[i].SetGrid(this, i);
+            }
+        }
+
+        public void Initialize() {
+            GameContext.SceneEvents.Subscribe<ToggleCellColliderEvent>(OnToggleCellCollider);
+        }
+
+        public void Dispose() {
+            GameContext.SceneEvents.Unsubscribe<ToggleCellColliderEvent>(OnToggleCellCollider);
+        }
+
+        private void OnToggleCellCollider(ToggleCellColliderEvent evt) {
+            for (int i = 0; i < _cellList.Count; i++) {
+                _cellList[i].ToggleCollider(evt.Enabled);
             }
         }
 
