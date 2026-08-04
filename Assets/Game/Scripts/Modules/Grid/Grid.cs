@@ -56,6 +56,51 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             return _cellList[ToIndex(row, col)];
         }
 
+        public Cell GetNearestEmptyCell(Cell origin, bool includeDiagonal = false) {
+            if (origin == null) {
+                return null;
+            }
+
+            return GetNearestEmptyCell(origin.GridPosition, includeDiagonal);
+        }
+
+        public Cell GetNearestEmptyCell(Vector2Int origin, bool includeDiagonal = false) {
+            Vector2Int[] directions = includeDiagonal ? AllDirections : Adjacent;
+
+            bool[] visited = new bool[Count];
+            Queue<Vector2Int> toVisit = new Queue<Vector2Int>();
+
+            visited[ToIndex(origin.x, origin.y)] = true;
+            toVisit.Enqueue(origin);
+
+            while (toVisit.Count > 0) {
+                Vector2Int current = toVisit.Dequeue();
+                Cell currentCell = GetCell(current.x, current.y);
+
+                if (currentCell != null && currentCell.Occupiable && !currentCell.Occupied) {
+                    return currentCell;
+                }
+
+                for (int i = 0; i < directions.Length; i++) {
+                    Vector2Int next = current + directions[i];
+
+                    if (next.x < 0 || next.x >= Height || next.y < 0 || next.y >= Width) {
+                        continue;
+                    }
+
+                    int nextIndex = ToIndex(next.x, next.y);
+                    if (visited[nextIndex]) {
+                        continue;
+                    }
+
+                    visited[nextIndex] = true;
+                    toVisit.Enqueue(next);
+                }
+            }
+
+            return null;
+        }
+
         public static readonly Vector2Int[] Adjacent = {
             new Vector2Int(0, 1), new Vector2Int(0, -1),
             new Vector2Int(1, 0), new Vector2Int(-1, 0)

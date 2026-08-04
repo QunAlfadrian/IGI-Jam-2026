@@ -79,6 +79,10 @@ namespace IGIJam.OrderInDisorder.GridSystem {
         public void Swap(Cell other) {
             Item current = Item;
 
+            if (other == null) {
+                other = Grid.GetNearestEmptyCell(this);
+            }
+
             SetItem(other.Item);
             other.SetItem(current);
 
@@ -106,12 +110,10 @@ namespace IGIJam.OrderInDisorder.GridSystem {
 
             if (Occupied) {
                 Swap(droppedItem.Cell);
-                return;
             }
 
             SetItem(droppedItem);
             Item.Move(PivotPosition);
-
             EvaluateItem();
         }
 
