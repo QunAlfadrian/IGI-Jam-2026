@@ -10,5 +10,6 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         public abstract bool Evaluate(Cell cell, GridSystem.Grid grid, List<Cell> affectedCells);
 
         public abstract List<Cell> GetAffectedCells(Cell cell, GridSystem.Grid grid);
+        public abstract string Hint();
     }
 }

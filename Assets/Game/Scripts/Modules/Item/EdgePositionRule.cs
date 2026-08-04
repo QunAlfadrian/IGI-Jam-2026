@@ -24,6 +24,10 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             return affectedCellList;
         }
 
+        public override string Hint() {
+            return $"I enjoy watching the edge of the shelf.";
+        }
+
         private bool IsEdgeCell(Cell cell, GridSystem.Grid grid) {
             if (grid.Height == 1 || grid.Width == 1) {
                 return true;

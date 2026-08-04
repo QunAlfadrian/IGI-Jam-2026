@@ -33,6 +33,10 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             return affectedCellList;
         }
 
+        public override string Hint() {
+            return $"I like corners. Place me in a corner of the shelf!";
+        }
+
         private bool IsCornerPosition(Cell cell, GridSystem.Grid grid) {
 
             Vector2Int pos = cell.GridPosition;

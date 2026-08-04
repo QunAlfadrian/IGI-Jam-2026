@@ -12,5 +12,9 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         public override List<Cell> GetAffectedCells(Cell cell, GridSystem.Grid grid) {
             throw new System.NotImplementedException();
         }
+
+        public override string Hint() {
+            throw new System.NotImplementedException();
+        }
     }
 }

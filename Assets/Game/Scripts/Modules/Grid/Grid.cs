@@ -21,6 +21,10 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             }
         }
 
+        private void Start() {
+            GameContext.SceneServices.Register(this);
+        }
+
         public void Initialize() {
             GameContext.SceneEvents.Subscribe<ToggleCellColliderEvent>(OnToggleCellCollider);
         }

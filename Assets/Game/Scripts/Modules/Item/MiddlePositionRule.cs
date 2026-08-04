@@ -38,5 +38,9 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
             return affectedCellList;
         }
+
+        public override string Hint() {
+            return $"I like to be surrounded by my friends, so I need to be in the middle of them.";
+        }
     }
 }

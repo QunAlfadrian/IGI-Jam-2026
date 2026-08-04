@@ -10,6 +10,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         [SerializeField] private CanvasGroup _canvasGroup;
         [SerializeField] private TextMeshProUGUI _name_tmp;
         [SerializeField] private TextMeshProUGUI _trait_tmp;
+        [SerializeField] private TextMeshProUGUI _hint_tmp;
         private Item _item;
         private RectTransform _rectTransform;
 
@@ -55,6 +56,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
             _name_tmp.text = _item.Data.Name;
             _trait_tmp.text = traits;
+            _hint_tmp.text = _item.GetRandomHint();
         }
 
 

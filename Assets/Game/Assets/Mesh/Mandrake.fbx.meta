@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Mandrake
-    second: {fileID: 2100000, guid: feb63e00601951749bf299d114a40304, type: 2}
+    second: {fileID: 2100000, guid: 527d37a9fc50207409f862f4ddd8cd3d, type: 2}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule

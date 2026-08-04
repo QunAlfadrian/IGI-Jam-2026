@@ -6,11 +6,12 @@ using UnityEngine;
 
 namespace IGIJam.OrderInDisorder.LevelSystem {
     public class LevelHandler : MonoBehaviour, IInitializable, IDisposable {
+        [SerializeField] private GridSystem.Grid _grid;
         [SerializeField] private LevelData _levelData;
         private LevelDatabase _database;
         private Level _level;
-        private GridSystem.Grid _grid;
 
+        public Transform CameraPivot;
         public string ID => _levelData.ID;
 
         public void Initialize() {
@@ -25,7 +26,6 @@ namespace IGIJam.OrderInDisorder.LevelSystem {
             _database = GameContext.PersistentServices.Get<LevelDatabase>();
             Debug.Log(_database == null);
             _level = _database.GetLevel(ID);
-            _grid = GameContext.SceneServices.Get<GridSystem.Grid>();
 
             PlaceItems();
         }
@@ -47,6 +47,18 @@ namespace IGIJam.OrderInDisorder.LevelSystem {
 
         private void OnPuzzleCompleted(PuzzleCompletedEvent evt) {
             _level.Clear();
+        }
+
+        public void CheckCompletion() {
+            List<Cell> allCells = _grid.GetAllCell();
+
+            foreach (var cell in allCells) {
+                if (!cell.Item.IsHappy) {
+                    return;
+                }
+            }
+
+            GameContext.SceneEvents.Publish(new LevelUpEvent());
         }
     }
 }

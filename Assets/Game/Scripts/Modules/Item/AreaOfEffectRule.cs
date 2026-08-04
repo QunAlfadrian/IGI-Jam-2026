@@ -44,5 +44,9 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
             return affectedCellList;
         }
+
+        public override string Hint() {
+            return $"I do not want next to {TargetAttribute.Name}!";
+        }
     }
 }

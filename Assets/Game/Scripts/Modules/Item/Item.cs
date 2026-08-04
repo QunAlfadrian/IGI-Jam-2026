@@ -32,6 +32,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         public ItemRuleBase[] ItemRuleArray => _data.ItemRuleArray;
         public ItemState State => _state;
         public Cell Cell { get; private set; }
+        public bool IsHappy => State == ItemState.Happy;
 
         private void Awake() {
             _cam = Camera.main;
@@ -156,6 +157,11 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
                 Cell.SetItem(this);
                 Cell.EvaluateItem();
             }
+        }
+
+        public string GetRandomHint() {
+            int randomIndex = UnityEngine.Random.Range(0, _ruleList.Count);
+            return _ruleList[randomIndex].Hint();
         }
 
         #region Pointer Event Handlers
