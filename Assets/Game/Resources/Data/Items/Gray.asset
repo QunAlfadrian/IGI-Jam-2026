@@ -16,7 +16,7 @@ MonoBehaviour:
   Name: Gray
   Description: 
   Prefab: {fileID: 0}
-  Archetype: {fileID: 11400000, guid: 1ca6a46924c4bbc408a068a6ce371a59, type: 2}
+  Archetype: {fileID: 11400000, guid: eb87f9c02460c5946a707696436ba04e, type: 2}
   AttributeArray:
   - {fileID: 11400000, guid: 0bea44b8f8f1c294aa8bb60300e8f006, type: 2}
   ItemRuleArray: []
