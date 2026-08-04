@@ -173,8 +173,6 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
                 _state = ItemState.Happy;
                 Cell.SetItem(null);
                 Cell.EvaluateAffectedCells();
-                Cell.SetItem(this);
-                Cell.Occupied = false;
             }
 
             GameContext.SceneEvents.Publish(new ToggleCellColliderEvent(true));
@@ -183,10 +181,17 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
         public void OnDrag(PointerEventData eventData) {
             transform.position = GetPointOnPlane(eventData) + _offset;
+
+            if (Cell != null && eventData.pointerEnter.TryGetComponent<Cell>(out var cell)) {
+                if (cell.Occupied) {
+                    Cell.SetItem(this);
+                } else {
+                    Cell.SetItem(null);
+                }
+            }
         }
 
         public void OnEndDrag(PointerEventData eventData) {
-            _collider.enabled = true;
 
             if (!_wasDropped) {
                 Return();

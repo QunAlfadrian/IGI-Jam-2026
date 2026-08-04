@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace IGIJam.OrderInDisorder.ItemSystem {
-    [CreateAssetMenu(menuName = "IGIJam/Item Rule/Middle Position Rule", order = 0)]
+    [CreateAssetMenu(menuName = "IGIJam/Item Rule/Middle Position Rule")]
     public class MiddlePositionRule : ItemRuleBase {
         public override bool Evaluate(Cell cell, GridSystem.Grid grid, List<Cell> affectedCells) {
             if (affectedCells.Count < 2) {
@@ -25,7 +25,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             Vector2Int gridPos = cell.GridPosition;
 
             foreach (var offset in GridSystem.Grid.Adjacent) {
-                if (offset.x == 1) {
+                if (offset.x != 0) {
                     continue;
                 }
 

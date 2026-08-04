@@ -65,5 +65,12 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             new Vector2Int(1, 1), new Vector2Int(-1, 1),
             new Vector2Int(1, -1), new Vector2Int(-1, -1)
         };
+
+        public static readonly Vector2Int[] AllDirections = {
+            new Vector2Int(0, 1), new Vector2Int(0, -1),
+            new Vector2Int(1, 0), new Vector2Int(-1, 0),
+            new Vector2Int(1, 1), new Vector2Int(-1, 1),
+            new Vector2Int(1, -1), new Vector2Int(-1, -1)
+        };
     }
 }

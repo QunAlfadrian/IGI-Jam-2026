@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace IGIJam.OrderInDisorder.ItemSystem {
-    [CreateAssetMenu(menuName = "IGIJam/Item Rule/Corner Position Rule", order = 0)]
+    [CreateAssetMenu(menuName = "IGIJam/Item Rule/Corner Position Rule")]
     public class CornerPositionRule : ItemRuleBase {
         public override bool Evaluate(Cell cell, GridSystem.Grid grid, List<Cell> affectedCells) {
             if (!IsCornerPosition(cell, grid)) {
