@@ -161,10 +161,12 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
         #region Pointer Event Handlers
         public void OnPointerEnter(PointerEventData eventData) {
             transform.DOScale(Vector3.one * 1.15f, 0.25f);
+            GameContext.SceneEvents.Publish(new ShowItemInfoEvent(this));
         }
 
         public void OnPointerExit(PointerEventData eventData) {
             transform.DOScale(Vector3.one * 1f, 0.25f);
+            GameContext.SceneEvents.Publish(new HideItemInfoEvent());
         }
 
         public void OnBeginDrag(PointerEventData eventData) {
@@ -183,6 +185,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
             GameContext.SceneEvents.Publish(new ToggleCellColliderEvent(true));
             GameContext.SceneEvents.Publish(new ToggleItemColliderEvent(false));
+            GameContext.SceneEvents.Publish(new HideItemInfoEvent());
         }
 
         public void OnDrag(PointerEventData eventData) {
