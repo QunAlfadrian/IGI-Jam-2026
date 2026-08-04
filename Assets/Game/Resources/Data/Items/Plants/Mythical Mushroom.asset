@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67be83b1c1ccb8041879792d4a70064b, type: 3}
+  m_Name: Mythical Mushroom
+  m_EditorClassIdentifier: 
+  ID: Item_MythicalMushroom
+  Name: Mythical Mushroom
+  Description: 
+  Prefab: {fileID: 3697989483024470888, guid: ec8f70c07d0b0eb4499b252b1f9b6b91, type: 3}
+  Archetype: {fileID: 11400000, guid: 717e41c82efb8314db44ab55cfe4c2c8, type: 2}
+  AttributeArray:
+  - {fileID: 11400000, guid: e417689a80418a24f90fa5b1c2c46e84, type: 2}
+  ItemRuleArray: []

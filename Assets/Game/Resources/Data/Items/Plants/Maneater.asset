@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67be83b1c1ccb8041879792d4a70064b, type: 3}
-  m_Name: Blue
+  m_Name: Maneater
   m_EditorClassIdentifier: 
-  ID: Item_Blue
-  Name: Blue
+  ID: Item_Maneater
+  Name: Maneater
   Description: 
-  Prefab: {fileID: 0}
-  Archetype: {fileID: 11400000, guid: 7d40a3e527945504798e3dad7f50c911, type: 2}
+  Prefab: {fileID: 3697989483024470888, guid: ecb61fce90ac0c34a983e0c5d40cebd8, type: 3}
+  Archetype: {fileID: 11400000, guid: 717e41c82efb8314db44ab55cfe4c2c8, type: 2}
   AttributeArray:
-  - {fileID: 11400000, guid: e417689a80418a24f90fa5b1c2c46e84, type: 2}
+  - {fileID: 11400000, guid: 1c0983d91547ea8488830f9bcacebb6c, type: 2}
   ItemRuleArray: []

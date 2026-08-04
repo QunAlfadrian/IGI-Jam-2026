@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67be83b1c1ccb8041879792d4a70064b, type: 3}
-  m_Name: Gray
+  m_Name: Phoenix Essence
   m_EditorClassIdentifier: 
-  ID: Item_Gray
-  Name: Gray
+  ID: Item_PhoenixEssence
+  Name: Phoenix Essence
   Description: 
-  Prefab: {fileID: 0}
-  Archetype: {fileID: 11400000, guid: eb87f9c02460c5946a707696436ba04e, type: 2}
+  Prefab: {fileID: 3697989483024470888, guid: c44f9613db2c7f2449552cd04a02d28d, type: 3}
+  Archetype: {fileID: 11400000, guid: 1ca6a46924c4bbc408a068a6ce371a59, type: 2}
   AttributeArray:
-  - {fileID: 11400000, guid: 0bea44b8f8f1c294aa8bb60300e8f006, type: 2}
+  - {fileID: 11400000, guid: f4398839ad2e559438645d03ff0a8b3e, type: 2}
   ItemRuleArray: []

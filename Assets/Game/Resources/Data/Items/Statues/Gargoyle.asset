@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 67be83b1c1ccb8041879792d4a70064b, type: 3}
-  m_Name: Red
+  m_Name: Gargoyle
   m_EditorClassIdentifier: 
-  ID: Item_Red
-  Name: Red
+  ID: Item_Gargoyle
+  Name: Gargoyle
   Description: 
-  Prefab: {fileID: 0}
-  Archetype: {fileID: 11400000, guid: 1ca6a46924c4bbc408a068a6ce371a59, type: 2}
+  Prefab: {fileID: 3697989483024470888, guid: d05d44ba89d81464497d2975b0844d03, type: 3}
+  Archetype: {fileID: 11400000, guid: bb151e8cddd36a641ab11eb47e516cbf, type: 2}
   AttributeArray:
   - {fileID: 11400000, guid: f4398839ad2e559438645d03ff0a8b3e, type: 2}
   ItemRuleArray: []
