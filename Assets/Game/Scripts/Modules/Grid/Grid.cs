@@ -15,9 +15,6 @@ namespace IGIJam.OrderInDisorder.GridSystem {
 
         private void Awake() {
             Count = Width * Height;
-        }
-
-        private void Start() {
             // initialize cell in cell list
             for (int i = 0; i < _cellList.Count; i++) {
                 _cellList[i].SetGrid(this, i);
@@ -46,6 +43,10 @@ namespace IGIJam.OrderInDisorder.GridSystem {
             int row = index / Width;
             int col = index % Width;
             return new Vector2Int(row, col);
+        }
+
+        public List<Cell> GetAllCell() {
+            return _cellList;
         }
 
         public Cell GetCell(int row, int col) {

@@ -6,21 +6,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
     [CreateAssetMenu(menuName = "IGIJam/Item Rule/Corner Position Rule")]
     public class CornerPositionRule : ItemRuleBase {
         public override bool Evaluate(Cell cell, GridSystem.Grid grid, List<Cell> affectedCells) {
-            if (!IsCornerPosition(cell, grid)) {
-                return false;
-            }
-
-            if (affectedCells.Count == 0) {
-                return false;
-            }
-
-            for (int i = 0; i < affectedCells.Count; i++) {
-                if (!affectedCells[i].Occupied) {
-                    return false;
-                }
-            }
-
-            return true;
+            return IsCornerPosition(cell, grid);
         }
 
         public override List<Cell> GetAffectedCells(Cell cell, GridSystem.Grid grid) {

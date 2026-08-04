@@ -5,12 +5,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
 namespace IGIJam.OrderInDisorder.ItemSystem {
     public class Item : MonoBehaviour, IInitializable, IDisposable, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IEndDragHandler, IDragHandler {
+        public event Action ItemStateChangedEvent;
+
         private Camera _cam;
         private Plane _dragPlane;
         private Vector3 _offset;
@@ -72,6 +75,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             }
 
             _state = result ? ItemState.Happy : ItemState.Sad;
+            ItemStateChangedEvent?.Invoke();
             Debug.Log($"{Data.Name} is {State.ToString()}");
         }
 
@@ -93,6 +97,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
             }
 
             _state = result ? ItemState.Happy : ItemState.Sad;
+            ItemStateChangedEvent?.Invoke();
             Debug.Log($"{Data.Name} is {State.ToString()}");
         }
 
@@ -171,6 +176,7 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
 
             if (Cell != null) {
                 _state = ItemState.Happy;
+                ItemStateChangedEvent?.Invoke();
                 Cell.SetItem(null);
                 Cell.EvaluateAffectedCells();
             }

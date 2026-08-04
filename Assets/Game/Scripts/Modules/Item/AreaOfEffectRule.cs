@@ -42,14 +42,6 @@ namespace IGIJam.OrderInDisorder.ItemSystem {
                 affectedCellList.Add(affectedCell);
             }
 
-            foreach (var offset in GridSystem.Grid.Diagonal) {
-                affectedCell = grid.GetCell(gridPos.x + offset.x, gridPos.y + offset.y);
-                if (affectedCell == null) {
-                    continue;
-                }
-                affectedCellList.Add(affectedCell);
-            }
-
             return affectedCellList;
         }
     }
